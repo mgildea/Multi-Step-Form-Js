@@ -16,8 +16,9 @@
     "url": "https://github.com/mgildea/Multi-Step-Form-Js/issues"
   },
   "homepage": "https://github.com/mgildea/Multi-Step-Form-Js",
-   "dependencies": {
+  "dependencies": {
     "jquery": "^2.2.0",
-    "jquery-validation":"^1.15"
+    "jquery-validation":"^1.16"
   }
+   
 }
