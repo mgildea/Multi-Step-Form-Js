@@ -9,6 +9,7 @@ You can install `multi-step-form-js` through `npm`.
 npm install multi-step-form-js
 ```
 
+## Setup
 
 The multi-step-form-js package requires:<br>
     1. an *msf-content* element with 1 to N *msf-view* elements<br>
@@ -20,45 +21,56 @@ and uses optional:<br>
 Example Html element with multi-step-from (msf) classes.  
 
 ```html
+<head>
+     <link rel="stylesheet" href="/node_modules/multi-step-form-js/css/multi-step-form.css" type="text/css">
+</head>
+
+...
+
 <form class="msf">
-<div class="msf-header">
-    <div class="row text-center">
-        <div class="msf-step col-md-4"><i class="fa fa-clipboard"></i> <span>Step 1</span></div>
-        <div class="msf-step col-md-4"><i class="fa fa-credit-card"></i><span>Step 2</span></div>
-        <div class="msf-step col-md-4"><i class="fa fa-check"></i> <span>Step 3</span></div>
-    </div>
-</div>
-
-<div class="msf-content">
-    <div class="msf-view">
-        ...
-    </div>
-    <div class="msf-view">
-        ...
-    </div>
-    <div class="msf-view">
-        ...
-    </div>
-</div>
-
-<div class="msf-navigation">
-    <div class="row">
-        <div class="col-md-3">
-            <button type="button" data-type="back" class="btn btn-outline-dark msf-nav-button"><i class="fa fa-chevron-left"></i> Back </button>
-        </div>
-        <div class="col-md-3 col-md-offset-6">
-            <button type="button" data-type="next" class="btn  btn-outline-dark msf-nav-button">Next <i class="fa fa-chevron-right"></i></button>
-            <button type="submit" data-type="submit" class="btn btn-outline-dark msf-nav-button">Submit</button>
+    <div class="msf-header">
+        <div class="row text-center">
+            <div class="msf-step col-md-4"><i class="fa fa-clipboard"></i> <span>Step 1</span></div>
+            <div class="msf-step col-md-4"><i class="fa fa-credit-card"></i><span>Step 2</span></div>
+            <div class="msf-step col-md-4"><i class="fa fa-check"></i> <span>Step 3</span></div>
         </div>
     </div>
-</div>
-</div>
+
+    <div class="msf-content">
+        <div class="msf-view">
+            ...
+        </div>
+        <div class="msf-view">
+            ...
+        </div>
+        <div class="msf-view">
+            ...
+        </div>
+    </div>
+
+    <div class="msf-navigation">
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" data-type="back" class="btn btn-outline-dark msf-nav-button"><i class="fa fa-chevron-left"></i> Back </button>
+            </div>
+            <div class="col-md-3 col-md-offset-6">
+                <button type="button" data-type="next" class="btn  btn-outline-dark msf-nav-button">Next <i class="fa fa-chevron-right"></i></button>
+                <button type="submit" data-type="submit" class="btn btn-outline-dark msf-nav-button">Submit</button>
+            </div>
+        </div>
+    </div>
+</form>
 ```
+
+## Initialize
 
 Example JavaScript multi-step-form initialization
 
-```javascript
- $(".msf:first").multiStepForm();
+```html
+<script src="/node_modules/multi-step-form-js/src/multi-step-form.js"></script>
+<script type="text/javascript">
+    $(".msf:first").multiStepForm();
+</script>
 ```
 
 
