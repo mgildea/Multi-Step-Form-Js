@@ -1,6 +1,6 @@
 {
   "name": "multi-step-form-js",
- "version": "0.0.2",
+ "version": "0.0.3",
   "description": "Multi Step From with jquery validation",
   "main": "index.js",
   "scripts": {

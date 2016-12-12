@@ -1,0 +1,71 @@
+.msf-view {
+            display: none;
+        }
+        
+        .msf-navigation {
+            text-align: center;
+        }
+        
+        .msf-nav-button {
+            display: none;
+        }
+        
+        .msf-header {
+            padding-top: 10px;
+            margin-bottom: 40px;
+            color: #777;
+        }
+        
+        .msf-header .msf-step {
+            font-size: 20px;
+            /*display : inline-block;
+       vertical-align : middle;*/
+        }
+        
+        .msf-header .msf-step i.fa {
+            height: 60px;
+            width: 60px;
+            line-height: 55px;
+            text-align: center;
+            border: 3px solid #777;
+            border-radius: 100%;
+            font-size: 30px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        
+        .msf-header .msf-step.msf-step-active {
+            color: #ef4035;
+            /*color:#3c763d;*/
+        }
+        
+        .msf-header .msf-step.msf-step-active i.fa {
+            border-color: #ef4035;
+            /*border-color : #3c763d;*/
+        }
+        
+        .msf-header .msf-step.msf-step-complete {
+            /*color: #ef4035;*/
+            color: #3c763d;
+        }
+        
+        .msf-header .msf-step.msf-step-complete i.fa {
+            /*border-color : #ef4035;*/
+            border-color: #3c763d;
+        }
+
+        
+
+.input-validation-error {
+    border-color: red;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px rgba(255, 0,0,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px rgba(255, 0,0,0.6);
+}
+
+    .input-validation-error:focus {
+        border-color: red;
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px rgba(255, 0,0,0.6);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px rgba(255, 0,0,0.6);
+    }
