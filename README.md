@@ -77,12 +77,18 @@ can optionally use jQuery Unobtrusive Validation
 <script src=".../path/to/jquery/unobtrusive/validation/jquery.validate.unobtrusive.min.js"></script>
 ```
 
+include mulit-step-form.js
+
+```html
+<script src="../path/to/multi-step-form-js/multi-step-form.js"></script>
+```
+
 Example Multi-Step-Form-Js initialization with options<br>
 *activeIndex* - index of step to initially display, default : 0<br>
 *validate* - [jQuery Validation options object](https://jqueryvalidation.org/validate/), default :  {}<br>
 
 ```html
-<script src="../path/to/multi-step-form-js/multi-step-form.js"></script>
+
 <script type="text/javascript">
     $(".msf:first").multiStepForm({
         activeIndex : 0,
@@ -95,7 +101,7 @@ Example Multi-Step-Form-Js initialization with options<br>
                     }
                 }
             }
-    });
+        });
 </script>
 ```
 
@@ -104,7 +110,6 @@ Example Multi-Step-Form-Js initialization with options<br>
 Example Multi-Step-Form-Js initialization using unobtrusive validation
 
 ```html
-<script src="/node_modules/multi-step-form-js/src/multi-step-form.js"></script>
 <script type="text/javascript">
     $(".msf:first").multiStepForm();
 </script>
@@ -112,5 +117,6 @@ Example Multi-Step-Form-Js initialization using unobtrusive validation
 
 
 ## Release History
+* 0.0.6 documentation updates
 * 0.0.4 allow parameters for non unobtrusive validation
 * 0.0.1 Initial Release
