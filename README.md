@@ -101,7 +101,7 @@ Example Multi-Step-Form-Js initialization with options<br>
 
 
 
-Example JavaScript multi-step-form initialization using unobtrusive validation
+Example Multi-Step-Form-Js initialization using unobtrusive validation
 
 ```html
 <script src="/node_modules/multi-step-form-js/src/multi-step-form.js"></script>
