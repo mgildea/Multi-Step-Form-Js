@@ -12,10 +12,10 @@ npm install multi-step-form-js
 ## Setup
 
 The multi-step-form-js package requires:<br>
-    1. use of [jQuery](https://jquery.com/) and [jQuery Validation](https://jqueryvalidation.org/)
-    2. an *.msf-content* html element with 1 to N *.msf-view* html elements<br>
+    1. use of [jQuery](https://jquery.com/) and [jQuery Validation](https://jqueryvalidation.org/)<br>
+    2. an *.msf-content* html element with 1 to N *.msf-view* html elements<br><br>
 and uses optional:<br>
-    1. [jQuery Unobtrusive Validation](https://github.com/aspnet/jquery-validation-unobtrusive)
+    1. [jQuery Unobtrusive Validation](https://github.com/aspnet/jquery-validation-unobtrusive)<br>
     2. an *.msf-header* element with N required *.msf-step* elements<br>
     3. an *.msf-navigation* element with *.msf-nav-button* buttons; if buttons are not defined they will be generated <br>
 
@@ -71,15 +71,15 @@ Requires jQuery and jQuery Validation
 <script src=".../path/to/jquery/jquery.min.js"></script>
 <script src=".../path/to/jquery/validation/jquery.validate.min.js"></script>
 ```
-can optionally use Jquery Unobtrusive Validation
+can optionally use jQuery Unobtrusive Validation
 
 ```html
 <script src=".../path/to/jquery/unobtrusive/validation/jquery.validate.unobtrusive.min.js"></script>
 ```
 
 Example Multi-Step-Form-Js initialization with options<br>
-*activeIndex* - index of step to display, default : 0<br>
-*validate* - [jquery validation options object](https://jqueryvalidation.org/validate/), default :  {}<br>
+*activeIndex* - index of step to initially display, default : 0<br>
+*validate* - [jQuery Validation options object](https://jqueryvalidation.org/validate/), default :  {}<br>
 
 ```html
 <script src="../path/to/multi-step-form-js/multi-step-form.js"></script>
