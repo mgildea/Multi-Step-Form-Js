@@ -43,7 +43,7 @@
 
         var defaults = {
             activeIndex: 0,
-            useJqueryValidation: true
+            validate: {}
         };
 
         var settings = $.extend({}, defaults, options);
@@ -203,13 +203,7 @@
             //get the view that is currently being displayed
             var view = form.views.filter(function () { return this.style && this.style.display !== '' && this.style.display !== 'none' });
 
-            //if (!settings.useJqueryValidation) {
-            //    var i = form.views.index(view);
-            //    view.hide();
-            //    form.views.eq(i + 1).show();
-            //}
-            //  else 
-            if (form.validate().subset(view)) {
+            if (form.validate(settings.validate).subset(view)) {
                 var i = form.views.index(view);
                 view.hide();
                 form.views.eq(i + 1).show();

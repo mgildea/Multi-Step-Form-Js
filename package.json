@@ -1,8 +1,17 @@
 {
   "name": "multi-step-form-js",
- "version": "0.0.3",
-  "description": "Multi Step From with jquery validation",
+ "version": "0.0.4",
+  "description": "Multi Step Form with jQuery Validation",
   "main": "index.js",
+  "keywords": [
+    "multi",
+    "step",
+    "form",
+    "jquery",
+    "validation",
+    "validate",
+    "unobtrusive"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,7 +27,8 @@
   "homepage": "https://github.com/mgildea/Multi-Step-Form-Js",
   "dependencies": {
     "jquery": "^2.2.0",
-    "jquery-validation":"^1.16"
+    "jquery-validation":"^1.16",
+    "jquery-validation-unobtrusive": "3.2.6"
   }
    
 }
