@@ -11,9 +11,7 @@ npm install multi-step-form-js
 
 ## Demo
 
-
-<iframe width="100%" height="600" src="http://jsfiddle.net/mgildea/ez94n125/7/show/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-
+View a [jsfiddle here](http://jsfiddle.net/mgildea/ez94n125/7/show/)
 
 ## Setup
 
