@@ -11,7 +11,7 @@ npm install multi-step-form-js
 
 ## Demo
 
-View a [jsfiddle here](http://jsfiddle.net/mgildea/ez94n125/7/show/)
+View a [jsfiddle here](http://jsfiddle.net/mgildea/ez94n125/13/show/)
 
 ## Setup
 
