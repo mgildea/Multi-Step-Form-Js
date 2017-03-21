@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Multi Step Form Js Demo</title>
+
+    <!--Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css">
+
+    <link rel="stylesheet" href="/example/css/multi-step-form.css" type="text/css">
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <div id="container body-content">
+            <form class="form-horizontal msf">
+                <div class="msf-header">
+                    <div class="row text-center">
+                        <div class="msf-step col-md-4"><i class="fa fa-clipboard"></i> <span>Enter Request Details</span></div>
+                        <div class="msf-step col-md-4"><i class="fa fa-credit-card"></i><span>Further Details</span></div>
+                        <div class="msf-step col-md-4"><i class="fa fa-check"></i> <span>Review and Submit</span></div>
+                    </div>
+                </div>
+
+                <div class="msf-content">
+                    <div class="msf-view">
+
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <div class="form-group">
+                                    <input id="name" name="name" type="text" class="form-control" placeholder="Name" data-bind="value: Name" data-val="true"
+                                        data-val-required="name is required">
+                                    <!--data-val="true" data-val-required="name is required"-->
+                                </div>
+                                <div class="form-group">
+                                    <input id="email" name="email" type="text" class="form-control" placeholder="Email" data-bind="value: Email" data-val="true"
+                                        data-val-required="email is required">
+                                    <!-- data-val="true" data-val-required="email is required -->
+                                </div>
+                                <div class="form-group">
+                                    <textarea id="details" name="details" rows="10" class="form-control" placeholder="Enter Details" data-bind="value: Details"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="msf-view">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <div class="form-group">
+                                    <select id="countries" name="countries" class="form-control" data-bind="options: availableCountries, selectedOptions: chosenCountries"
+                                        data-val="true" data-val-required="select a country" size="5" multiple="true"></select>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <select id="type" name="type" class="form-control" data-bind="options: availableTypes, selectedOptions: chosenType, optionsCaption: 'Choose Request Type'"
+                                        data-val="true" data-val-required="Request type is required.">
+                  </select>
+
+                                    <!-- data-val="true" data-val-required="email is required -->
+                                </div>
+                                <!--   <div class="form-group">
+                  <textarea id="additionaldetails" name="additionaldetails" rows="10" class="form-control" placeholder="Enter Additional Details" data-bind="value: AdditionalDetails"></textarea>
+                </div>
+                -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="msf-view">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <label>Name</label> : <span data-bind="text: Name"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <label>Email</label> : <span data-bind="text: Email"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <label>Type</label> : <span data-bind="text: chosenType"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <label>Countries</label> : <span data-bind="text: chosenCountries"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <label>Details</label> : <span data-bind="text: Details"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md- col-md-offset-3">
+                                <div class="form-group">
+                                     <input id="additional" name="additional" type="text" class="form-control" placeholder="Additional Details"  data-val="true" data-val-required="name is required">    
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="msf-navigation">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button type="button" data-type="back" class="btn msf-nav-button"><i class="fa fa-chevron-left"></i> Back </button>
+                        </div>
+
+                        <div class="col-md-3 col-md-offset-6">
+                            <button type="button" data-type="next" class="btn msf-nav-button">Next <i class="fa fa-chevron-right"></i></button>
+
+                            <button type="submit" data-type="submit" class="btn msf-nav-button">Submit</button>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="/src/multi-step-form.js"></script>
+    <script type="text/javascript">
+        function ViewModel() {
+            var self = this;
+
+            self.Name = ko.observable('');
+            self.Email = ko.observable('');
+            self.Details = ko.observable('');
+
+            self.AdditionalDetails = ko.observable('');
+            self.availableTypes = ko.observableArray(['New', 'Open', 'Closed']);
+            self.chosenType = ko.observable('');
+
+            self.availableCountries = ko.observableArray(['France', 'Germany', 'Spain', 'United States', 'Mexico']),
+                self.chosenCountries = ko.observableArray([]) // Initially, only Germany is selected
+
+
+        }
+
+        var viewModel = new ViewModel();
+
+        ko.applyBindings(viewModel);
+
+
+        $(".msf:first").multiStepForm({});
+
+    </script>
+
+
+</body>
+
+</html>

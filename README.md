@@ -11,7 +11,7 @@ npm install multi-step-form-js
 
 ## Demo
 
-View a [jsfiddle here](http://jsfiddle.net/mgildea/ez94n125/13/show/)
+View a [jsfiddle here](http://jsfiddle.net/mgildea/ez94n125/17/show/)
 
 ## Setup
 
@@ -121,6 +121,7 @@ Example Multi-Step-Form-Js initialization using unobtrusive validation
 
 
 ## Release History
+* 0.0.8 block form submit on enter if nonfinal view
 * 0.0.6 documentation updates
 * 0.0.4 allow parameters for non unobtrusive validation
 * 0.0.1 Initial Release
