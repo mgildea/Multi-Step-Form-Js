@@ -1,10 +1,10 @@
 {
   "name": "multi-step-form-js",
-  "version": "0.0.8",
+ "version": "0.0.8",
   "description": "Multi Step Form with jQuery Validation",
   "main": "index.js",
   "keywords": [
-    "multi",
+    "multi",
     "step",
     "form",
     "jquery",
@@ -20,7 +20,7 @@
     "type": "git",
     "url": "https://github.com/mgildea/Multi-Step-Form-Js.git"
   },
-  "author": "Matthew Gildea <mattgildea@hotmail.com> (https://github.com/mgildea)",
+ "author": "Matthew Gildea <mattgildea@hotmail.com> (https://github.com/mgildea)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mgildea/Multi-Step-Form-Js/issues"
@@ -28,7 +28,8 @@
   "homepage": "https://github.com/mgildea/Multi-Step-Form-Js",
   "dependencies": {
     "jquery": "^2.2.0",
-    "jquery-validation": "^1.16",
+    "jquery-validation":"^1.16",
     "jquery-validation-unobtrusive": "3.2.6"
   }
+   
 }
