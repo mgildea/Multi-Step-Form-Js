@@ -175,6 +175,8 @@
                         else if (i === index) {
                             $(element).removeClass(msfCssClasses.stepComplete);
                             $(element).addClass(msfCssClasses.stepActive);
+                            var currentProgress = Math.round((i / form.steps.length)*100);
+                            $(document).trigger('msf:updateProgress', [currentProgress]);    // Trigger an event to notify the progress has changed
                         }
                         else {
                             $(element).removeClass(msfCssClasses.stepComplete);
