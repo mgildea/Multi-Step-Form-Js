@@ -43,7 +43,8 @@
 
         var defaults = {
             activeIndex: 0,
-            validate: {}
+            validate: {},
+            progressHandler: undefined
         };
 
         var settings = $.extend({}, defaults, options);
@@ -175,6 +176,13 @@
                         else if (i === index) {
                             $(element).removeClass(msfCssClasses.stepComplete);
                             $(element).addClass(msfCssClasses.stepActive);
+                            var currentProgress = Math.round((i / form.steps.length)*100);
+                            if (typeof settings.progressHandler =='function') {
+                                settings.progressHandler.call(this, currentProgress);           // Call the specified progress update handler
+                            }
+                            else {
+                                $(document).trigger('msf:updateProgress', [currentProgress]);   // Trigger an event to notify the progress has changed
+                            }
                         }
                         else {
                             $(element).removeClass(msfCssClasses.stepComplete);
