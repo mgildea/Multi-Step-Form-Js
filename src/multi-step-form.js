@@ -207,6 +207,7 @@
                 var i = form.views.index(view);
                 view.hide();
                 form.views.eq(i + 1).show();
+                form.views.eq(i + 1).find(':input').first().focus();
             }
         });
 
@@ -218,6 +219,7 @@
             view.hide();
 
             form.views.eq(i - 1).show();
+            form.views.eq(i - 1).find(':input').first().focus();
         });
 
     };
