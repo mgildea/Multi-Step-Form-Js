@@ -199,27 +199,35 @@
 
         form.init();
 
+        form.getActiveView = function() {
+            return form.views.filter(function () { return this.style && this.style.display !== '' && this.style.display !== 'none' });
+        };
+
+        form.setActiveView = function(index) {
+            var view = form.getActiveView();
+
+         //   var view = (currentView) ? currentView : form.getActiveView();
+
+            view.hide();
+            form.views.eq(index).show();
+            form.views.eq(index).find(':input').first().focus();
+        }
+
         form.nextNavButton.click(function () {
-            //get the view that is currently being displayed
-            var view = form.views.filter(function () { return this.style && this.style.display !== '' && this.style.display !== 'none' });
+            var view = form.getActiveView();
 
             if (form.validate(settings.validate).subset(view)) {
                 var i = form.views.index(view);
-                view.hide();
-                form.views.eq(i + 1).show();
-                form.views.eq(i + 1).find(':input').first().focus();
+
+                form.setActiveView(i+1);
             }
         });
 
         form.backNavButton.click(function () {
-            //get the view that is currently being displayed
-            var view = form.views.filter(function () { return this.style && this.style.display !== '' && this.style.display !== 'none' });
-
+            var view = form.getActiveView();
             var i = form.views.index(view);
-            view.hide();
 
-            form.views.eq(i - 1).show();
-            form.views.eq(i - 1).find(':input').first().focus();
+            form.setActiveView(i-1);
         });
 
     };
