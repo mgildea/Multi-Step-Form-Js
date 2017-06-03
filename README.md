@@ -33,7 +33,7 @@ and uses optional:<br>
 
 
 Example Html element with multi-step-form (msf) classes.  <br>
-As progress is made through each step the 'msf-step-active' and 'msf-step-complete' classes will be added to the element of 'msf-step' class.
+As progress is made through each step the 'msf-step-active' and 'msf-step-complete' classes will be added to the element of 'msf-step' class adn the 'msf:viewChanged' event is triggered.
 
 ```html
 <head>
