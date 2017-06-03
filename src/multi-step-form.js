@@ -16,8 +16,7 @@
         factory(jQuery);
     }
 }(function ($) {
-
-    "use strict";
+    'use strict';
 
     const msfCssClasses = {
         header: "msf-header",
@@ -28,7 +27,6 @@
         view: "msf-view",
         navigation: "msf-navigation",
         navButton: "msf-nav-button"
-
     };
 
     const msfNavTypes = {
@@ -36,7 +34,11 @@
         next: "next",
         submit: "submit"
 
-    }
+    };
+
+    const msfEventTypes = {
+        viewChanged : "msf:viewChanged"
+    };
 
     $.fn.multiStepForm = function (options) {
         var form = this;
@@ -48,12 +50,14 @@
 
         var settings = $.extend({}, defaults, options);
 
+        //find the msf-content object
         form.content = this.find("." + msfCssClasses.content).first();
 
         if (form.content.length === 0) {
             throw new Error('Multi-Step Form requires a child element of class \'' + msfCssClasses.content + '\'');
         }
 
+        //find the msf-views within the content object
         form.views = $(this.content).find("." + msfCssClasses.view);
 
         if (form.views.length === 0) {
@@ -61,9 +65,28 @@
         }
 
         form.header = this.find("." + msfCssClasses.header).first();
+        form.navigation = this.find("." + msfCssClasses.navigation).first();
         form.steps = [];
 
-        form.navigation = this.find("." + msfCssClasses.navigation).first();
+        form.getActiveView = function() {
+            return form.views.filter(function () { return this.style && this.style.display !== '' && this.style.display !== 'none' });
+        };
+
+        form.setActiveView = function(index) {
+            var view = form.getActiveView();
+            var previousIndex = form.views.index(view);
+
+            view = form.views.eq(index);
+            view.show();
+            view.find(':input').first().focus();
+
+            //trigger the 'view has changed' event
+            form.trigger(msfEventTypes.viewChanged, {
+                currentIndex : index, 
+                previousIndex : previousIndex,
+                totalSteps : form.steps.length
+            });    
+        }
 
         form.init = function () {
 
@@ -133,17 +156,14 @@
                 var view = element,
                     $view = $(element);
 
-                view.init = function () {
-                    if (index === settings.activeIndex) {
-                        $view.show();
-                    }
-                };
-
-
                 $view.on('show', function (e) {
                     if (this !== e.target)
                         return;
 
+                    //hide whichever view is currently showing
+                    form.getActiveView().hide();
+              
+                    //choose which navigation buttons should be displayed based on index of view 
                     if (index > 0) {
                         form.backNavButton.show();
                     }
@@ -156,6 +176,7 @@
                         form.submitNavButton.hide();
                         form.nextNavButton.show();
 
+                        //if this is not the last view do not allow the enter key to submit the form as it is not completed yet
                         $(this).find(':input').keypress(function (e) {
                             if (e.which == 13) // Enter key = keycode 13
                             {
@@ -165,7 +186,7 @@
                         });
                     }
 
-
+                    //determine if each step is completed or active based in index
                     $.each(form.steps, function (i, element) {
                         if (i < index) {
                             $(element).removeClass(msfCssClasses.stepActive);
@@ -175,8 +196,6 @@
                         else if (i === index) {
                             $(element).removeClass(msfCssClasses.stepComplete);
                             $(element).addClass(msfCssClasses.stepActive);
-                            var currentProgress = Math.round((i / form.steps.length)*100);
-                            $(document).trigger('msf:updateProgress', [currentProgress]);    // Trigger an event to notify the progress has changed
                         }
                         else {
                             $(element).removeClass(msfCssClasses.stepComplete);
@@ -189,35 +208,22 @@
                     if (this !== e.target)
                         return;
 
+                    //hide all navigation buttons, display choices will be set on show event
                     form.backNavButton.hide();
                     form.nextNavButton.hide();
                     form.submitNavButton.hide();
                 });
-
-                view.init();
             });
 
+            form.setActiveView(settings.activeIndex);
         };
 
         form.init();
 
-        form.getActiveView = function() {
-            return form.views.filter(function () { return this.style && this.style.display !== '' && this.style.display !== 'none' });
-        };
-
-        form.setActiveView = function(index) {
-            var view = form.getActiveView();
-
-         //   var view = (currentView) ? currentView : form.getActiveView();
-
-            view.hide();
-            form.views.eq(index).show();
-            form.views.eq(index).find(':input').first().focus();
-        }
-
         form.nextNavButton.click(function () {
             var view = form.getActiveView();
 
+            //validate the input in the current view
             if (form.validate(settings.validate).subset(view)) {
                 var i = form.views.index(view);
 
@@ -228,7 +234,7 @@
         form.backNavButton.click(function () {
             var view = form.getActiveView();
             var i = form.views.index(view);
-
+            
             form.setActiveView(i-1);
         });
 

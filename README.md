@@ -1,5 +1,9 @@
 # Multi-Step-Form-Js
-Multi Step Form with jQuery validation
+**Multi Step Form with jQuery validation**
+
+* utilizes jquery validation (with or without jquery unobtrusive validation) to validate the form at each step.
+* contains customizable header step classes to distinguish between active, complete, and incomplete steps.
+* triggers custom change events with relevant step data for custom processing (e.g. updating progress bars)
 
 ## Download
 
@@ -11,7 +15,10 @@ npm install multi-step-form-js
 
 ## Demo
 
-View a [jsfiddle here](http://jsfiddle.net/mgildea/ez94n125/17/show/)
+The following demo contains examples for listening to the 'msf:viewChanged' event to update a progress bar as well as defined header step classes to distinguish the current and completed steps.<br><br>
+View a [jsfiddle here](http://jsfiddle.net/mgildea/ez94n125/25/show/)
+
+
 
 ## Setup
 
@@ -23,7 +30,10 @@ and uses optional:<br>
     2. an *.msf-header* element with N required *.msf-step* elements<br>
     3. an *.msf-navigation* element with *.msf-nav-button* buttons; if buttons are not defined they will be generated <br>
 
-Example Html element with multi-step-from (msf) classes.  
+
+
+Example Html element with multi-step-form (msf) classes.  <br>
+As progress is made through each step the 'msf-step-active' and 'msf-step-complete' classes will be added to the element of 'msf-step' class.
 
 ```html
 <head>
@@ -120,7 +130,23 @@ Example Multi-Step-Form-Js initialization using unobtrusive validation
 ```
 
 
+
+Example jquery event listener to update some progress bar with object parameter containing properties: 'currentIndex', 'previousIndex', and 'totalSteps' 
+
+
+```html
+<script type="text/javascript">
+    $(document).on("msf:viewChanged", function(event, data){
+        var progress = Math.round((data.currentIndex / data.totalSteps)*100);
+        $(".progress-bar").css("width", progress + "%").attr('aria-valuenow', progress);
+    });
+
+</script>
+```
+
+
 ## Release History
+* 0.0.9 trigger 'msf:viewChanged' event when displaying a new view
 * 0.0.8 block form submit on enter if nonfinal view
 * 0.0.6 documentation updates
 * 0.0.4 allow parameters for non unobtrusive validation
