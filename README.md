@@ -99,13 +99,16 @@ include mulit-step-form.js
 
 Example Multi-Step-Form-Js initialization with options<br>
 *activeIndex* - index of step to initially display, default : 0<br>
+*hideBackButton* - boolean value indicating if back button should be visible after the first step, default : false<br>
 *validate* - [jQuery Validation options object](https://jqueryvalidation.org/validate/), default :  {}<br>
+
 
 ```html
 
 <script type="text/javascript">
     $(".msf:first").multiStepForm({
         activeIndex : 0,
+        hideBackButton : false,
         validate: {
             rules : {
                 name : "required",
@@ -146,6 +149,7 @@ Example jquery event listener to update some progress bar with object parameter 
 
 
 ## Release History
+* 0.0.10 provide option to not display back button in subsequent steps
 * 0.0.9 trigger 'msf:viewChanged' event when displaying a new view
 * 0.0.8 block form submit on enter if nonfinal view
 * 0.0.6 documentation updates

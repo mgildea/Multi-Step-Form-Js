@@ -45,7 +45,8 @@
 
         var defaults = {
             activeIndex: 0,
-            validate: {}
+            validate: {},
+            hideBackButton: false
         };
 
         var settings = $.extend({}, defaults, options);
@@ -164,7 +165,7 @@
                     form.getActiveView().hide();
               
                     //choose which navigation buttons should be displayed based on index of view 
-                    if (index > 0) {
+                    if (index > 0 && !settings.hideBackButton) {
                         form.backNavButton.show();
                     }
 
