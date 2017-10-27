@@ -131,7 +131,9 @@
                 <div class="msf-navigation">
                     <div class="row">
                         <div class="col-md-3">
+                            
                             <button type="button" data-type="back" class="btn btn-default msf-nav-button"><i class="fa fa-chevron-left"></i> Back </button>
+                           
                         </div>
 
                         <div class="col-md-3 col-md-offset-6">
@@ -193,7 +195,9 @@
         });
 
 
-        $(".msf:first").multiStepForm();
+        $(".msf:first").multiStepForm({
+            hideBackButton : true
+        });
 
         
 

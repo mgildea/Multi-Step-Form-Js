@@ -214,6 +214,9 @@
                     form.nextNavButton.hide();
                     form.submitNavButton.hide();
                 });
+                      
+                //initially hide each view
+                $view.hide();
             });
 
             form.setActiveView(settings.activeIndex);
