@@ -21,8 +21,11 @@
     const msfCssClasses = {
         header: "msf-header",
         step: "msf-step",
-        stepComplete: "msf-step-complete",
-        stepActive: "msf-step-active",
+        statuses: {
+            stepComplete: "msf-step-complete",
+            stepIncomplete: "msf-step-incomplete",
+            stepActive: "msf-step-active"
+        },
         content: "msf-content",
         view: "msf-view",
         navigation: "msf-navigation",
@@ -36,8 +39,13 @@
 
     };
 
+    const msfJqueryData = {
+        validated: "msf-validated",
+        visited: "msf-visited"
+    };
+
     const msfEventTypes = {
-        viewChanged : "msf:viewChanged"
+        viewChanged: "msf:viewChanged"
     };
 
     $.fn.multiStepForm = function (options) {
@@ -46,7 +54,9 @@
         var defaults = {
             activeIndex: 0,
             validate: {},
-            hideBackButton: false
+            hideBackButton: false,
+            allowUnvalidatedStep: false,
+            allowClickNavigation: false
         };
 
         var settings = $.extend({}, defaults, options);
@@ -68,25 +78,68 @@
         form.header = this.find("." + msfCssClasses.header).first();
         form.navigation = this.find("." + msfCssClasses.navigation).first();
         form.steps = [];
+        //form.completedSteps = 0;
 
-        form.getActiveView = function() {
+        form.getActiveView = function () {
             return form.views.filter(function () { return this.style && this.style.display !== '' && this.style.display !== 'none' });
         };
 
-        form.setActiveView = function(index) {
-            var view = form.getActiveView();
-            var previousIndex = form.views.index(view);
+        form.setActiveView = function (index) {
+            var previousView = form.getActiveView()[0];
+            var previousIndex = form.views.index(previousView);
 
-            view = form.views.eq(index);
+            $(previousView).hide();
+            //if(previousView)
+            //    previousView.hide();
+
+            var view = form.views.eq(index);
             view.show();
             view.find(':input').first().focus();
 
+            var completedSteps = 0;
+            $.each(form.views, function (index, view) {
+                if ($.data(view, msfJqueryData.validated)) {
+                    completedSteps++;
+                }
+            });
+
             //trigger the 'view has changed' event
             form.trigger(msfEventTypes.viewChanged, {
-                currentIndex : index, 
-                previousIndex : previousIndex,
-                totalSteps : form.steps.length
-            });    
+                currentIndex: index,
+                previousIndex: previousIndex,
+                totalSteps: form.steps.length,
+                completedSteps: completedSteps
+            });
+        }
+
+        form.setStatusCssClass = function (step, cssClass) {
+            $(step).removeClass(msfCssClasses.statuses.stepComplete);
+            $(step).removeClass(msfCssClasses.statuses.stepIncomplete);
+
+            $(step).addClass(cssClass);
+        }
+
+        form.tryNavigateToView= function(currentIndex, targetIndex) {
+            if (targetIndex <= currentIndex) {
+                form.views[currentIndex]
+                form.validateView(form.views[currentIndex]);
+                form.setActiveView(targetIndex);
+                return;
+            }
+
+            if (!form.validateViews(currentIndex, targetIndex - currentIndex, function (i) {
+                if (!settings.allowUnvalidatedStep) {
+                    form.setActiveView(i);
+                    return false;
+                }
+
+                return true;
+            })) {
+                if (!settings.allowUnvalidatedStep) {
+                    return;
+                }
+            }
+            form.setActiveView(targetIndex);
         }
 
         form.init = function () {
@@ -105,12 +158,25 @@
 
                 this.initStep = function (index, view) {
 
+                    //append steps to header if they do not exist
                     if (form.steps.length < index + 1) {
                         $(form.header).append($("<div/>", {
                             "class": msfCssClasses.step,
                             "display": "none"
                         }));
                     }
+
+                    if (settings.allowClickNavigation) {
+                        //bind the click event to the header step
+                        $(form.steps[index]).click(function (e) {
+                            var view = form.getActiveView()[0];
+                            var currentIndex = form.views.index(view);
+                            var targetIndex = form.steps.index($(e.target).closest("." + msfCssClasses.step)[0]);
+
+                           form.tryNavigateToView(currentIndex,targetIndex);
+                        });
+                    }
+
                 }
 
                 $.each(form.views, this.initStep);
@@ -152,18 +218,35 @@
             this.initHeader();
             this.initNavigation();
 
-            this.views.each(function (index, element) {
+            this.views.each(function (index, view) {
 
-                var view = element,
-                    $view = $(element);
+                $.data(view, msfJqueryData.validated, false);
+                $.data(view, msfJqueryData.visited, false);
 
-                $view.on('show', function (e) {
+                //if this is not the last view do not allow the enter key to submit the form as it is not completed yet                  
+                if (index != form.views.length - 1) {
+                    $(view).find(':input').keypress(function (e) {
+                        if (e.which == 13) // Enter key = keycode 13
+                        {
+                            form.nextNavButton.click();
+                            return false;
+                        }
+                    });
+                }
+
+                $(view).on('show', function (e) {
                     if (this !== e.target)
                         return;
 
-                    //hide whichever view is currently showing
-                    form.getActiveView().hide();
-              
+                    var view = e.target
+                    $.data(view, msfJqueryData.visited, true);
+
+                    var index = form.views.index(view);
+                    var step = form.steps[index];
+
+                    $(step).addClass(msfCssClasses.statuses.stepActive);
+                    //form.setStatusCssClass(step, msfCssClasses.statuses.stepActive);
+
                     //choose which navigation buttons should be displayed based on index of view 
                     if (index > 0 && !settings.hideBackButton) {
                         form.backNavButton.show();
@@ -176,71 +259,124 @@
                     else {
                         form.submitNavButton.hide();
                         form.nextNavButton.show();
-
-                        //if this is not the last view do not allow the enter key to submit the form as it is not completed yet
-                        $(this).find(':input').keypress(function (e) {
-                            if (e.which == 13) // Enter key = keycode 13
-                            {
-                                form.nextNavButton.click();
-                                return false;
-                            }
-                        });
                     }
-
-                    //determine if each step is completed or active based in index
-                    $.each(form.steps, function (i, element) {
-                        if (i < index) {
-                            $(element).removeClass(msfCssClasses.stepActive);
-                            $(element).addClass(msfCssClasses.stepComplete);
-                        }
-
-                        else if (i === index) {
-                            $(element).removeClass(msfCssClasses.stepComplete);
-                            $(element).addClass(msfCssClasses.stepActive);
-                        }
-                        else {
-                            $(element).removeClass(msfCssClasses.stepComplete);
-                            $(element).removeClass(msfCssClasses.stepActive);
-                        }
-                    });
                 });
 
-                $view.on('hide', function (e) {
+                $(view).on('hide', function (e) {
                     if (this !== e.target)
                         return;
+
+                    var index = form.views.index(e.target);
+                    var step = form.steps[index];
+
+                    $(step).removeClass(msfCssClasses.statuses.stepActive);
+
+                    if ($.data(e.target, msfJqueryData.validated) && $.data(e.target, msfJqueryData.visited)) {
+                        form.setStatusCssClass(step, msfCssClasses.statuses.stepComplete);
+                    }
+                    else if ($.data(e.target, msfJqueryData.visited)) {
+                        form.setStatusCssClass(step, msfCssClasses.statuses.stepIncomplete);
+                    }
+                    else {
+                        form.setStatusCssClass(step, "");
+                    }
 
                     //hide all navigation buttons, display choices will be set on show event
                     form.backNavButton.hide();
                     form.nextNavButton.hide();
                     form.submitNavButton.hide();
                 });
-                      
+
                 //initially hide each view
-                $view.hide();
+                $(view).hide();
             });
 
-            form.setActiveView(settings.activeIndex);
+
+            if(settings.activeIndex > 0) {
+                $(form).ready(function(){
+                    form.tryNavigateToView(0, settings.activeIndex);
+                });
+               
+            }
+            else {
+                form.setActiveView(0);
+            }
+
         };
+
+        form.validateView = function (view) {
+            var index = form.views.index(view);
+            if (form.validate().subset(view)) {
+                $.data(view, msfJqueryData.validated, true);
+                form.setStatusCssClass(form.steps[index], msfCssClasses.statuses.stepComplete);
+                return true;
+            }
+            else {
+                $.data(view, msfJqueryData.validated, false);
+                form.setStatusCssClass(form.steps[index], msfCssClasses.statuses.stepIncomplete);
+                return false;
+            }
+        };
+
+        form.validateViews = function (i = 0, length = form.views.length, invalid) {
+            var validationIgnore = "";
+            var isValid = true;
+
+            //remember original validation setings for ignores
+            if ($(form).data("validator")) {
+                validationIgnore = $(form).data("validator").settings.ignore
+                $(form).data("validator").settings.ignore = "";
+            }
+
+            for (i; i < length; i++) {
+                if (!form.validateView(form.views[i])) {
+                    isValid = false;
+
+                    if(!invalid(i)) {
+                        break;
+                    }
+                }
+            }
+
+            if ($(form).data("validator")) {
+                $(form).data("validator").settings.ignore = validationIgnore;
+            }
+
+            return isValid;
+        }
 
         form.init();
 
         form.nextNavButton.click(function () {
-            var view = form.getActiveView();
+            var view = form.getActiveView()[0];
+            var index = form.views.index(view);
 
-            //validate the input in the current view
-            if (form.validate(settings.validate).subset(view)) {
-                var i = form.views.index(view);
-
-                form.setActiveView(i+1);
+            if (form.validateView(view)) {
+                form.setActiveView(index + 1);
+            }
+            else if (settings.allowUnvalidatedStep) {
+                form.setActiveView(index + 1);
             }
         });
 
         form.backNavButton.click(function () {
-            var view = form.getActiveView();
-            var i = form.views.index(view);
-            
-            form.setActiveView(i-1);
+            var view = form.getActiveView()[0];
+            var index = form.views.index(view);
+
+            form.validateView(view);
+
+            form.setActiveView(index - 1);
         });
+
+        form.submit(function (e) {
+            var validationIgnore = "";
+
+            form.validateViews(0, form.views.length, function () {
+                e.preventDefault();
+                return true;
+            });
+        });
+
 
     };
 

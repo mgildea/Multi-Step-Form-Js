@@ -4,6 +4,8 @@
 * utilizes jquery validation (with or without jquery unobtrusive validation) to validate the form at each step.
 * contains customizable header step classes to distinguish between active, complete, and incomplete steps.
 * triggers custom change events with relevant step data for custom processing (e.g. updating progress bars)
+* provides configuration for navigating steps by clicking headers
+* provides configuration for allowing navigating through steps with unvalidated form elements
 
 ## Download
 
@@ -15,8 +17,8 @@ npm install multi-step-form-js
 
 ## Demo
 
-The following demo contains examples for listening to the 'msf:viewChanged' event to update a progress bar as well as defined header step classes to distinguish the current and completed steps.<br><br>
-View a [jsfiddle here](http://jsfiddle.net/mgildea/ez94n125/25/show/)
+The following demo contains examples for listening to the 'msf:viewChanged' event to update a progress bar as well as defined header step classes to distinguish the current and completed steps and click navigation.<br><br>
+View a [jsfiddle here](http://jsfiddle.net/mgildea/ez94n125/80/show/)
 
 
 
@@ -99,6 +101,8 @@ include mulit-step-form.js
 
 Example Multi-Step-Form-Js initialization with options<br>
 *activeIndex* - index of step to initially display, default : 0<br>
+*allowClickNavigation* - allows ability to click steps in header to advance form, default : false<br>
+*allowUnvalidatedStep* - allows ability to advance in form without passing validation, default : false<br>
 *hideBackButton* - boolean value indicating if back button should be visible after the first step, default : false<br>
 *validate* - [jQuery Validation options object](https://jqueryvalidation.org/validate/), default :  {}<br>
 
@@ -108,6 +112,8 @@ Example Multi-Step-Form-Js initialization with options<br>
 <script type="text/javascript">
     $(".msf:first").multiStepForm({
         activeIndex : 0,
+        allowClickNavigation : true,    
+        allowUnvalidatedStep : false,    
         hideBackButton : false,
         validate: {
             rules : {
@@ -149,6 +155,8 @@ Example jquery event listener to update some progress bar with object parameter 
 
 
 ## Release History
+* 0.0.12 configs to allow for advancing views without completed validations, click navigation in header, fixed ability to initialize start index
+* 0.0.11 hide all views upon initialization before showing first view
 * 0.0.10 provide option to not display back button in subsequent steps
 * 0.0.9 trigger 'msf:viewChanged' event when displaying a new view
 * 0.0.8 block form submit on enter if nonfinal view

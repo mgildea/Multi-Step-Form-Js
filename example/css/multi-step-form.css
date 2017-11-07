@@ -21,6 +21,9 @@
             /*display : inline-block;
        vertical-align : middle;*/
         }
+        .msf-header .msf-step:hover {
+            cursor: pointer;
+        }
         
         .msf-header .msf-step i.fa {
             height: 60px;
@@ -34,27 +37,42 @@
             margin-right: 10px;
         }
         
-        .msf-header .msf-step.msf-step-active {
-            color: #ef4035;
-            /*color:#3c763d;*/
-        }
-        
-        .msf-header .msf-step.msf-step-active i.fa {
-            border-color: #ef4035;
-            /*border-color : #3c763d;*/
-        }
-        
         .msf-header .msf-step.msf-step-complete {
             /*color: #ef4035;*/
-            color: #3c763d;
+            color: green;
         }
         
         .msf-header .msf-step.msf-step-complete i.fa {
             /*border-color : #ef4035;*/
-            border-color: #3c763d;
+            border-color: green;
+        }
+
+        .msf-header .msf-step.msf-step-incomplete {
+            /*color: #ef4035;*/
+            color:red;
+        }
+        
+        .msf-header .msf-step.msf-step-incomplete i.fa {
+            /*border-color : #ef4035;*/
+            border-color: red;
+        }
+        
+        .msf-header .msf-step.msf-step-active,
+        .msf-header .msf-step.msf-step-active.msf-step-complete,
+        .msf-header .msf-step.msf-step-active.msf-step-incomplete {
+            color: blue;
+            /*color:#3c763d;*/
+        }
+        
+        .msf-header .msf-step.msf-step-active i.fa,
+        .msf-header .msf-step.msf-step-active.msf-step-complete i.fa,
+        .msf-header .msf-step.msf-step-active.msf-step-incomplete i.fa  {
+            border-color: blue;
+            /*border-color : #3c763d;*/
         }
 
         
+
 
 .input-validation-error {
     border-color: red;
