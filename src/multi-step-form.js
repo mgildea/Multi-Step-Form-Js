@@ -318,7 +318,11 @@
             }
         };
 
-        form.validateViews = function (i = 0, length = form.views.length, invalid) {
+        form.validateViews = function (i, length, invalid) {
+            i = typeof i === 'undefined' ? 0 : i;
+            length = typeof length === 'undefined' ? form.views.length : length;
+           
+
             var validationIgnore = "";
             var isValid = true;
 
