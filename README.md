@@ -155,6 +155,7 @@ Example jquery event listener to update some progress bar with object parameter 
 
 
 ## Release History
+* 0.0.13 remove default parameter values in js functions
 * 0.0.12 configs to allow for advancing views without completed validations, click navigation in header, fixed ability to initialize start index
 * 0.0.11 hide all views upon initialization before showing first view
 * 0.0.10 provide option to not display back button in subsequent steps
