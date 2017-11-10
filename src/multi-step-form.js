@@ -381,7 +381,7 @@
             });
         });
 
-
+        return form;
     };
 
     $.validator.prototype.subset = function (container) {
