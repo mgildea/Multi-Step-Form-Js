@@ -225,7 +225,7 @@
 
                 //if this is not the last view do not allow the enter key to submit the form as it is not completed yet                  
                 if (index != form.views.length - 1) {
-                    $(view).find(':input').keypress(function (e) {
+                    $(view).find(':input').not('textarea').keypress(function (e) {
                         if (e.which == 13) // Enter key = keycode 13
                         {
                             form.nextNavButton.click();
