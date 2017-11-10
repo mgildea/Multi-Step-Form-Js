@@ -1,11 +1,13 @@
-(function (factory) {
+(function(factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
         // AMD is used - Register as an anonymous module.
         define(['jquery', 'jquery-validation'], factory);
-    } else if (typeof exports === 'object') {
+    }
+    else if (typeof exports === 'object') {
         factory(require('jquery'), require('jquery-validation'));
-    } else {
+    }
+    else {
         // Neither AMD nor CommonJS used. Use global variables.
         if (typeof jQuery === 'undefined') {
             throw 'multi-step-form-js requires jQuery to be loaded first';
@@ -15,7 +17,7 @@
         }
         factory(jQuery);
     }
-}(function ($) {
+}(function($) {
     'use strict';
 
     const msfCssClasses = {
@@ -48,7 +50,7 @@
         viewChanged: "msf:viewChanged"
     };
 
-    $.fn.multiStepForm = function (options) {
+    $.fn.multiStepForm = function(options) {
         var form = this;
 
         var defaults = {
@@ -80,11 +82,13 @@
         form.steps = [];
         //form.completedSteps = 0;
 
-        form.getActiveView = function () {
-            return form.views.filter(function () { return this.style && this.style.display !== '' && this.style.display !== 'none' });
+        form.getActiveView = function() {
+            return form.views.filter(function() {
+                return this.style && this.style.display !== '' && this.style.display !== 'none'
+            });
         };
 
-        form.setActiveView = function (index) {
+        form.setActiveView = function(index) {
             var previousView = form.getActiveView()[0];
             var previousIndex = form.views.index(previousView);
 
@@ -97,7 +101,7 @@
             view.find(':input').first().focus();
 
             var completedSteps = 0;
-            $.each(form.views, function (index, view) {
+            $.each(form.views, function(index, view) {
                 if ($.data(view, msfJqueryData.validated)) {
                     completedSteps++;
                 }
@@ -112,14 +116,14 @@
             });
         }
 
-        form.setStatusCssClass = function (step, cssClass) {
+        form.setStatusCssClass = function(step, cssClass) {
             $(step).removeClass(msfCssClasses.statuses.stepComplete);
             $(step).removeClass(msfCssClasses.statuses.stepIncomplete);
 
             $(step).addClass(cssClass);
         }
 
-        form.tryNavigateToView= function(currentIndex, targetIndex) {
+        form.tryNavigateToView = function(currentIndex, targetIndex) {
             if (targetIndex <= currentIndex) {
                 form.views[currentIndex]
                 form.validateView(form.views[currentIndex]);
@@ -127,14 +131,14 @@
                 return;
             }
 
-            if (!form.validateViews(currentIndex, targetIndex - currentIndex, function (i) {
-                if (!settings.allowUnvalidatedStep) {
-                    form.setActiveView(i);
-                    return false;
-                }
+            if (!form.validateViews(currentIndex, targetIndex - currentIndex, function(i) {
+                    if (!settings.allowUnvalidatedStep) {
+                        form.setActiveView(i);
+                        return false;
+                    }
 
-                return true;
-            })) {
+                    return true;
+                })) {
                 if (!settings.allowUnvalidatedStep) {
                     return;
                 }
@@ -142,9 +146,9 @@
             form.setActiveView(targetIndex);
         }
 
-        form.init = function () {
+        form.init = function() {
 
-            this.initHeader = function () {
+            this.initHeader = function() {
                 if (form.header.length === 0) {
                     form.header = $("<div/>", {
                         "class": msfCssClasses.header,
@@ -156,7 +160,7 @@
 
                 form.steps = $(form.header).find("." + msfCssClasses.step);
 
-                this.initStep = function (index, view) {
+                this.initStep = function(index, view) {
 
                     //append steps to header if they do not exist
                     if (form.steps.length < index + 1) {
@@ -168,15 +172,14 @@
 
                     if (settings.allowClickNavigation) {
                         //bind the click event to the header step
-                        $(form.steps[index]).click(function (e) {
+                        $(form.steps[index]).click(function(e) {
                             var view = form.getActiveView()[0];
                             var currentIndex = form.views.index(view);
                             var targetIndex = form.steps.index($(e.target).closest("." + msfCssClasses.step)[0]);
 
-                           form.tryNavigateToView(currentIndex,targetIndex);
+                            form.tryNavigateToView(currentIndex, targetIndex);
                         });
                     }
-
                 }
 
                 $.each(form.views, this.initStep);
@@ -185,7 +188,7 @@
             };
 
 
-            this.initNavigation = function () {
+            this.initNavigation = function() {
 
                 if (form.navigation.length === 0) {
                     form.navigation = $("<div/>", {
@@ -195,8 +198,9 @@
                     $(form.content).after(form.navigation);
                 }
 
-                this.initNavButton = function (type) {
-                    var element = this.navigation.find("button[data-type='" + type + "'], input[type='button']"), type;
+                this.initNavButton = function(type) {
+                    var element = this.navigation.find("button[data-type='" + type + "'], input[type='button']"),
+                        type;
                     if (element.length === 0) {
                         element = $("<button/>", {
                             "class": msfCssClasses.navButton,
@@ -205,7 +209,6 @@
                         });
                         element.appendTo(form.navigation);
                     }
-
                     return element;
                 };
 
@@ -214,19 +217,18 @@
                 form.submitNavButton = this.initNavButton(msfNavTypes.submit);
             };
 
-
             this.initHeader();
             this.initNavigation();
 
-            this.views.each(function (index, view) {
+            this.views.each(function(index, view) {
 
                 $.data(view, msfJqueryData.validated, false);
                 $.data(view, msfJqueryData.visited, false);
 
                 //if this is not the last view do not allow the enter key to submit the form as it is not completed yet                  
-                if (index != form.views.length - 1) {
-                    $(view).find(':input').not('textarea').keypress(function (e) {
-                        if (e.which == 13) // Enter key = keycode 13
+                if (index !== form.views.length - 1) {
+                    $(view).find(':input').not('textarea').keypress(function(e) {
+                        if (e.which === 13) // Enter key = keycode 13
                         {
                             form.nextNavButton.click();
                             return false;
@@ -234,11 +236,11 @@
                     });
                 }
 
-                $(view).on('show', function (e) {
+                $(view).on('show', function(e) {
                     if (this !== e.target)
                         return;
 
-                    var view = e.target
+                    var view = e.target;
                     $.data(view, msfJqueryData.visited, true);
 
                     var index = form.views.index(view);
@@ -262,7 +264,7 @@
                     }
                 });
 
-                $(view).on('hide', function (e) {
+                $(view).on('hide', function(e) {
                     if (this !== e.target)
                         return;
 
@@ -292,11 +294,10 @@
             });
 
 
-            if(settings.activeIndex > 0) {
-                $(form).ready(function(){
+            if (settings.activeIndex > 0) {
+                $(form).ready(function() {
                     form.tryNavigateToView(0, settings.activeIndex);
                 });
-               
             }
             else {
                 form.setActiveView(0);
@@ -304,8 +305,9 @@
 
         };
 
-        form.validateView = function (view) {
+        form.validateView = function(view) {
             var index = form.views.index(view);
+
             if (form.validate().subset(view)) {
                 $.data(view, msfJqueryData.validated, true);
                 form.setStatusCssClass(form.steps[index], msfCssClasses.statuses.stepComplete);
@@ -318,25 +320,33 @@
             }
         };
 
-        form.validateViews = function (i, length, invalid) {
+        form.validateViews = function(i, length, invalid) {
             i = typeof i === 'undefined' ? 0 : i;
             length = typeof length === 'undefined' ? form.views.length : length;
-           
 
-            var validationIgnore = "";
+
+            var validationIgnore = ""; // Saving the existing validator ignore settings to reset them after validating multi-step form
             var isValid = true;
 
             //remember original validation setings for ignores
             if ($(form).data("validator")) {
-                validationIgnore = $(form).data("validator").settings.ignore
-                $(form).data("validator").settings.ignore = "";
+                var formValidatorSettings = $(form).data("validator").settings;
+                validationIgnore = formValidatorSettings.ignore;
+
+                var currentValidationIgnoreSettingsArray = validationIgnore.split(",");
+                if (currentValidationIgnoreSettingsArray.length >= 1) {
+                    // Remove the ":hidden" selector from validator ignore settings as we want our hidden fieldsets/steps to be validated before final submit
+                    var hiddenIndex = $.inArray(":hidden", currentValidationIgnoreSettingsArray);
+                    currentValidationIgnoreSettingsArray.splice(hiddenIndex, 1);
+                    $(form).data("validator").settings.ignore = currentValidationIgnoreSettingsArray.toString();
+                }
             }
 
             for (i; i < length; i++) {
                 if (!form.validateView(form.views[i])) {
                     isValid = false;
 
-                    if(!invalid(i)) {
+                    if (!invalid(i)) {
                         break;
                     }
                 }
@@ -351,7 +361,7 @@
 
         form.init();
 
-        form.nextNavButton.click(function () {
+        form.nextNavButton.click(function() {
             var view = form.getActiveView()[0];
             var index = form.views.index(view);
 
@@ -363,7 +373,7 @@
             }
         });
 
-        form.backNavButton.click(function () {
+        form.backNavButton.click(function() {
             var view = form.getActiveView()[0];
             var index = form.views.index(view);
 
@@ -372,30 +382,29 @@
             form.setActiveView(index - 1);
         });
 
-        form.submit(function (e) {
+        form.submit(function(e) {
             var validationIgnore = "";
 
-            form.validateViews(0, form.views.length, function () {
+            form.validateViews(0, form.views.length, function() {
                 e.preventDefault();
                 return true;
             });
         });
-
         return form;
     };
 
-    $.validator.prototype.subset = function (container) {
+    $.validator.prototype.subset = function(container) {
         var ok = true;
         var self = this;
-        $(container).find(':input').each(function () {
+        $(container).find(':input').each(function() {
             if (!self.element($(this))) ok = false;
         });
         return ok;
     };
 
-    $.each(['show', 'hide'], function (i, ev) {
+    $.each(['show', 'hide'], function(i, ev) {
         var el = $.fn[ev];
-        $.fn[ev] = function () {
+        $.fn[ev] = function() {
             this.trigger(ev);
             return el.apply(this, arguments);
         };
