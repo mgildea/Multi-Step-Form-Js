@@ -18,7 +18,7 @@ npm install multi-step-form-js
 ## Demo
 
 The following demo contains examples for listening to the 'msf:viewChanged' event to update a progress bar as well as defined header step classes to distinguish the current and completed steps and click navigation.<br><br>
-View a [jsfiddle here](http://jsfiddle.net/mgildea/ez94n125/80/show/)
+View a [jsfiddle here](https://jsfiddle.net/mgildea/xmnftakx/)
 
 
 
@@ -155,6 +155,7 @@ Example jquery event listener to update some progress bar with object parameter 
 
 
 ## Release History
+* 0.1.0 return form object, fix bugs in hidden view validation
 * 0.0.13 remove default parameter values in js functions
 * 0.0.12 configs to allow for advancing views without completed validations, click navigation in header, fixed ability to initialize start index
 * 0.0.11 hide all views upon initialization before showing first view

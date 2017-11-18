@@ -125,9 +125,11 @@
 
         form.tryNavigateToView = function(currentIndex, targetIndex) {
             if (targetIndex <= currentIndex) {
-                form.views[currentIndex]
+
                 form.validateView(form.views[currentIndex]);
-                form.setActiveView(targetIndex);
+
+                if(!settings.hideBackButton)
+                    form.setActiveView(targetIndex);
                 return;
             }
 
@@ -320,8 +322,8 @@
             }
         };
 
-        form.validateViews = function(i, length, invalid) {
-            i = typeof i === 'undefined' ? 0 : i;
+        form.validateViews = function(currentIndex, length, invalid) {
+            currentIndex = typeof currentIndex === 'undefined' ? 0 : currentIndex;
             length = typeof length === 'undefined' ? form.views.length : length;
 
 
@@ -342,7 +344,7 @@
                 }
             }
 
-            for (i; i < length; i++) {
+            for (var i = currentIndex; i < currentIndex + length; i++) {
                 if (!form.validateView(form.views[i])) {
                     isValid = false;
 
